@@ -18,3 +18,19 @@
     color: #3AACFF;
 }
 
+
+.transaction-table {
+    th {
+        min-width: 230px;
+        text-align: center;
+    }
+
+
+    td{
+        min-width: 230px;
+        overflow-wrap: break-word;
+
+        padding: 0px 3px;
+    }
+}
+

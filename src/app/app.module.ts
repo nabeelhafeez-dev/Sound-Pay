@@ -16,7 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import {SharedModule} from "./shared/shared.module";
 import { MatIconModule } from '@angular/material/icon';
 import { ToastrModule } from 'ngx-toastr';
-
+import { DatePipe } from '@angular/common';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -28,12 +28,11 @@ const routerConfig: ExtraOptions = {
     declarations: [
         AppComponent
     ],
-    imports     : [
+    imports : [
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes, routerConfig),
-SharedModule,
-
+        SharedModule,
         // Fuse, FuseConfig & FuseMockAPI
         FuseModule,
         FuseConfigModule.forRoot(appConfig),

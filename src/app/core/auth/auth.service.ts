@@ -5,6 +5,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import {environment} from "../../../environments/environment";
+import {TRANMODEL} from "../../modules/tranModel";
 
 @Injectable()
 export class AuthService
@@ -35,7 +36,7 @@ export class AuthService
 
     get accessToken(): string
     {
-        return localStorage.getItem('accessToken') ?? '';
+        return sessionStorage.getItem('access_token') ?? '';
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -132,6 +133,18 @@ export class AuthService
     {
         return this._httpClient.post('api/auth/sign-up', user);
     }
+
+    getAllTransactions(data: any){
+        let req = {
+            "startDate":"7/16/2022 2:26:22 PM",
+            "endDate":"9/16/2022 2:26:22 PM",
+            "orderBy": 0
+        }
+        return this._httpClient.post(environment.apiUrl + 'api/Transactions/v1/GetAllTransaction', req);
+    }
+
+
+
 
     /**
      * Unlock session

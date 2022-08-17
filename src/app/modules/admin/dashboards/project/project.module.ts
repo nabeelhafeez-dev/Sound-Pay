@@ -17,6 +17,10 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ProjectComponent } from 'app/modules/admin/dashboards/project/project.component';
 import { projectRoutes } from 'app/modules/admin/dashboards/project/project.routing';
 import {DragDropModule} from "@angular/cdk/drag-drop";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import { MatInputModule } from '@angular/material/input';
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
     declarations: [
@@ -24,6 +28,7 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
     ],
     imports: [
         RouterModule.forChild(projectRoutes),
+        MatInputModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
@@ -38,7 +43,10 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
         NgApexchartsModule,
         TranslocoModule,
         SharedModule,
-        DragDropModule
+        DragDropModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatPaginatorModule
     ]
 })
 export class ProjectModule

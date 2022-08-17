@@ -5,20 +5,34 @@
             <div class="w-3/6">
                 <div class="mb-3 flex">
                     <div class="w-3/6 pr-2">
-                        <label  class="form-label">Start Date</label>
-                        <input
-                            formControlName="startDate"
-                            type="date"
-                               class="form-control rounded-full"
-                               placeholder="name@example.com">
+                        <mat-form-field class="w-full">
+                            <mat-label>Start Date</mat-label>
+                            <input
+                                matInput
+                                [max]="startend"
+                                [matDatepicker]="picker1"
+                                placeholder="Start Date"
+                                readonly
+                                (dateChange)="minEndDate()"
+                                formControlName="startDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
                     </div>
                     <div class="w-3/6 px-2">
-                        <label  class="form-label">End Date</label>
-                        <input
-                            formControlName="EndDate"
-                            type="date"
-                            class="form-control rounded-full"
-                            placeholder="name@example.com">
+                        <mat-form-field class="w-full">
+                            <mat-label>End Date</mat-label>
+                            <input
+                                matInput
+                                [matDatepicker]="picker2"
+                                placeholder="End Date"
+                                [min]="minEnd"
+                                readonly
+                                (dateChange)="OnchangeEndDate()"
+                                formControlName="endDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
                     </div>
 
                 </div>
@@ -37,12 +51,8 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     <div class="flex flex-wrap w-full  mx-auto p-6 pt-3">
-
-
         <div class="flex items-center justify-between w-full">
             <div class="dash-heading w-8/12">
                 <div class="text-2xl font-semibold tracking-tight leading-8">Transactions History Records</div>
@@ -54,218 +64,64 @@
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                 </select>
-
             </div>
         </div>
-
 
         <div class="sm:col-span-2 lg:col-span-3  flex flex-col  overflow-hidden w-full">
             <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-4  sm:px-6 lg:px-8">
                     <div class="overflow-hidden">
-                        <table class=" text-center w-full">
-                            <thead class="border-b text-black   " style="background: #DEE2E6">
-                            <tr>
-                                <th scope="col" class="text-sm font-medium  px-6 py-4">
-                                    Transaction ID
-                                </th>
-                                <th scope="col" class="text-sm font-medium  px-6 py-4">
-                                    Date
-                                </th>
-                                <th scope="col" class="text-sm font-medium  px-6 py-4">
-                                    Sender
-                                </th>
-                                <th scope="col" class="text-sm font-medium  px-6 py-4">
-                                    Receiver
-                                </th>
-                                <th scope="col" class="text-sm font-medium  px-6 py-4">
-                                    Amount
-                                </th>
-                                <th scope="col" class="text-sm font-medium  px-6 py-4">
+                        <mat-table class="transaction-table"  [dataSource]="dataSource">
 
-                                    Email
-                                </th>
-                                <th scope="col" class="text-sm font-medium  px-6 py-4">
-                                    Status
-                                </th>
-                            </tr>
-                            </thead >
-                            <tbody>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold "><a href="#">John Doe</a></td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    July 17, 2021, 09:22 AM
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Albert Bryant
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Sarah Coleman
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Rs. 38.50
-                                </td>
+                            <ng-container matColumnDef="TranID">
+                                <th *matHeaderCellDef>Transaction ID</th>
+                                <td *matCellDef="let user">{{user.transId?user.transId:"-"}}</td>
+                            </ng-container>
 
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    sarah.coleman@gmail.com
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    <div class="flex">
-                                        <mat-icon class="text-success mr-2 ">check_circle_outline</mat-icon>
-                                        <p class="self-center text-success font-medium">
-                                            Completed
-                                        </p>
-                                    </div>
-                                </td>
+                            <ng-container matColumnDef="TranDate">
+                                <th *matHeaderCellDef>Date</th>
+                                <td
+                                    *matCellDef="let user">{{user.transactionDate?user.transactionDate:"-" | date: 'M/d/yy, h:mm a'}}</td>
+                            </ng-container>
 
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold "><a href="#">John Doe</a></td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    July 17, 2021, 09:22 AM
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Albert Bryant
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Sarah Coleman
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Rs. 38.50
-                                </td>
+                            <ng-container matColumnDef="Sender">
+                                <th *matHeaderCellDef>Sender</th>
+                                <td
+                                    *matCellDef="let user">{{user.sender?user.sender:"-"}}</td>
+                            </ng-container>
 
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    sarah.coleman@gmail.com
-                                </td>
+                            <ng-container matColumnDef="Recipient">
+                                <th *matHeaderCellDef>Receiver</th>
+                                <td
+                                    *matCellDef="let user">{{user.receipent?user.receipent:"-"}}</td>
+                            </ng-container>
 
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    <div class="flex">
-                                        <mat-icon class="text-danger mr-2 ">highlight_off</mat-icon>
-                                        <p class="self-center text-danger font-medium">
-                                            Rejected
-                                        </p>
-                                    </div>
-                                </td>
+                            <ng-container matColumnDef="Amount">
+                                <th *matHeaderCellDef>Amount</th>
+                                <td
+                                    *matCellDef="let user">{{user.amount?user.amount:"-"}}</td>
+                            </ng-container>
 
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold "><a href="#">John Doe</a></td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    July 17, 2021, 09:22 AM
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Albert Bryant
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Sarah Coleman
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Rs. 38.50
-                                </td>
-
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    sarah.coleman@gmail.com
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    <div class="flex">
-                                        <mat-icon class="text-success mr-2 ">check_circle_outline</mat-icon>
-                                        <p class="self-center text-success font-medium">
-                                            Completed
-                                        </p>
-                                    </div>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold "><a href="#">John Doe</a></td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    July 17, 2021, 09:22 AM
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Albert Bryant
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Sarah Coleman
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Rs. 38.50
-                                </td>
-
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    sarah.coleman@gmail.com
-                                </td>
-
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    <div class="flex">
-                                        <mat-icon class="text-danger mr-2 ">highlight_off</mat-icon>
-                                        <p class="self-center text-danger font-medium">
-                                            Rejected
-                                        </p>
-                                    </div>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold "><a href="#">John Doe</a></td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    July 17, 2021, 09:22 AM
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Albert Bryant
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Sarah Coleman
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Rs. 38.50
-                                </td>
-
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    sarah.coleman@gmail.com
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    <div class="flex">
-                                        <mat-icon class="text-success mr-2 ">check_circle_outline</mat-icon>
-                                        <p class="self-center text-success font-medium">
-                                            Completed
-                                        </p>
-                                    </div>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-bold "><a href="#">John Doe</a></td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    July 17, 2021, 09:22 AM
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Albert Bryant
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Sarah Coleman
-                                </td>
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    Rs. 38.50
-                                </td>
-
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    sarah.coleman@gmail.com
-                                </td>
-
-                                <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                    <div class="flex">
-                                        <mat-icon class="text-danger mr-2 ">highlight_off</mat-icon>
-                                        <p class="self-center text-danger font-medium">
-                                            Rejected
-                                        </p>
-                                    </div>
-                                </td>
-
-                            </tr>
+                            <ng-container matColumnDef="Email">
+                                <th *matHeaderCellDef>Email</th>
+                                <td
+                                    *matCellDef="let user">{{user.email?user.email:"-"}}</td>
+                            </ng-container>
 
 
-                            </tbody>
-                        </table>
+                            <ng-container matColumnDef="TranStatus">
+                                <th *matHeaderCellDef>Status</th>
+                                <td class="duration-cell"
+                                    *matCellDef="let user"><p [ngClass]="returnColor(user.transactionStatus)">{{returnStatus(user.transactionStatus)}}</p></td>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"
+                                            class="border-b bg-gray-800 text-white"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"
+                                     class="text-center"></mat-row>
+
+                        </mat-table>
                     </div>
                 </div>
             </div>
@@ -276,51 +132,13 @@
                     <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"> Next </a>
                 </div>
                 <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-                    <div>
-                        <p class="text-sm text-gray-700">
-                            Showing
-                            <span class="font-medium">1</span>
-                            to
-                            <span class="font-medium">10</span>
-                            of
-                            <span class="font-medium">97</span>
-                            results
-                        </p>
-                    </div>
-                    <div>
-                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
-                            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Previous</span>
-                                <!-- Heroicon name: solid/chevron-left -->
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                            <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-                            <a href="#" aria-current="page" class="z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 1 </a>
-                            <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 2 </a>
-                            <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium"> 3 </a>
-                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700"> ... </span>
-                            <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 hidden md:inline-flex relative items-center px-4 py-2 border text-sm font-medium"> 8 </a>
-                            <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 9 </a>
-                            <a href="#" class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"> 10 </a>
-                            <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
-                                <span class="sr-only">Next</span>
-                                <!-- Heroicon name: solid/chevron-right -->
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </a>
-                        </nav>
-                    </div>
+                    <mat-paginator #paginator
+                                   [pageSize]="5"
+                                   [pageSizeOptions]="[5, 10, 20]">
+                    </mat-paginator>
                 </div>
             </div>
-
         </div>
-
-
-
     </div>
-
     </form>
 </div>
