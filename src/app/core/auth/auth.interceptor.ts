@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthUtils } from 'app/core/auth/auth.utils';
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
@@ -11,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor
     /**
      * Constructor
      */
-    constructor(private _authService: AuthService)
+    constructor(private _authService: AuthService,private _router: Router)
     {
     }
 
@@ -51,7 +52,7 @@ export class AuthInterceptor implements HttpInterceptor
                 {
                     // Sign out
                     this._authService.signOut();
-
+                    this._router.navigateByUrl('/sign-in');
                     // Reload the app
                     location.reload();
                 }

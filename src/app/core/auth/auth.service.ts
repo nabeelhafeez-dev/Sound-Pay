@@ -115,7 +115,7 @@ export class AuthService
     signOut(): Observable<any>
     {
         // Remove the access token from the local storage
-        localStorage.removeItem('accessToken');
+        sessionStorage.removeItem('accessToken');
 
         // Set the authenticated flag to false
         this._authenticated = false;
