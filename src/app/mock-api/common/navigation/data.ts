@@ -8,7 +8,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Transactions',
         type: 'basic',
         icon: 'heroicons_outline:switch-horizontal',
-        link: '/dashboard/project'
+        link: '/dashboard/transactions'
     },
     // {
     //     id: 'apps.calendar',
