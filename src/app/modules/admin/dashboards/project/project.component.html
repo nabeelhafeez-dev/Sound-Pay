@@ -41,6 +41,8 @@
                             <div class="w-3/6 pr-2">
                                 <mat-form-field class="w-full">
                                     <mat-label>Start Date</mat-label>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
                                     <input
                                         matInput
                                         [max]="startend"
@@ -49,13 +51,16 @@
                                         readonly
                                         (dateChange)="minEndDate()"
                                         formControlName="startDate">
-                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-error *ngIf="tranForm.get('startDate').hasError('required')">
+                                        Start Date is required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="w-3/6 px-2">
                                 <mat-form-field class="w-full">
-                                    <mat-label>End Date</mat-label>
+                                    <mat-label>End Date</mat-label><mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+
                                     <input
                                         matInput
                                         [matDatepicker]="picker2"
@@ -64,8 +69,9 @@
                                         readonly
                                         (dateChange)="OnchangeEndDate()"
                                         formControlName="endDate">
-                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker2></mat-datepicker>
+                                    <mat-error *ngIf="tranForm.get('endDate').hasError('required')">
+                                        End Date is required
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
 
