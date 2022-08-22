@@ -119,7 +119,6 @@ export class AuthService
         debugger
         // Remove the access token from the local storage
         sessionStorage.removeItem('access_token');
-        this._router.navigate(['/sign-in']);
         // Set the authenticated flag to false
         this._authenticated = false;
 

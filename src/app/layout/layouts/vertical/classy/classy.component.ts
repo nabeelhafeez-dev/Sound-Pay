@@ -115,5 +115,6 @@ export class ClassyLayoutComponent implements OnInit, OnDestroy
 
     logout() {
         this._authService.signOut();
+        this._router.navigate(['/sign-in']);
     }
 }
