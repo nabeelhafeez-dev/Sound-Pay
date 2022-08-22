@@ -41,6 +41,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     tranForm: FormGroup;
     data: any;
     tranLog: TRANMODEL;
+    startend: Date;
     minEnd = new Date();
     start_date = null
     end_date = null
@@ -98,7 +99,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     OnchangeEndDate() {
         debugger
-        this.minEnd = this.tranForm.controls['endDate'].value;
+        this.startend = this.tranForm.controls['endDate'].value;
         this.end_date = this.datepipe.transform(this.tranForm.controls['endDate'].value, 'MM-dd-yyyy')
 
     }
