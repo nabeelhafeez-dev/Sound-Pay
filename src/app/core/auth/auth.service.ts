@@ -6,6 +6,7 @@ import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import {environment} from "../../../environments/environment";
 import {TRANMODEL} from "../../modules/tranModel";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService
@@ -17,7 +18,8 @@ export class AuthService
      */
     constructor(
         private _httpClient: HttpClient,
-        private _userService: UserService
+        private _userService: UserService,
+        private _router: Router
     )
     {
     }
@@ -31,7 +33,7 @@ export class AuthService
      */
     set accessToken(token: string)
     {
-        localStorage.setItem('accessToken', token);
+        sessionStorage.setItem('access_token', token);
     }
 
     get accessToken(): string
@@ -114,9 +116,9 @@ export class AuthService
      */
     signOut(): Observable<any>
     {
+        debugger
         // Remove the access token from the local storage
-        sessionStorage.removeItem('accessToken');
-
+        sessionStorage.removeItem('access_token');
         // Set the authenticated flag to false
         this._authenticated = false;
 

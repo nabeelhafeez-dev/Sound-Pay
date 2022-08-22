@@ -9,6 +9,11 @@ export class UtilsService {
     constructor(private fuseConfirmationService: FuseConfirmationService) {
     }
 
+    getLoggedInUser(){
+        return JSON.parse(sessionStorage.getItem('userData')).user;
+    }
+
+
     openConfirmationDialog(title = 'Confirm to delete', message = 'Are you sure you want to remove this data permanently? <span class=\"font-medium\">This action cannot be undone!</span>') {
         return this.fuseConfirmationService.open({
             "title": title,

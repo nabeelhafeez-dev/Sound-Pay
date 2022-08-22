@@ -104,24 +104,23 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     getTransactions() {
         debugger
-        //this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
-        // if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : null) {
-        //     this.tranLog.endDate = this.tranLog.startDate;
-        // }
+        this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
+        if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : null) {
+            this.tranLog.endDate = this.tranLog.startDate;
+        }
         this.spinner.show();
         this.authService.getAllTransactions(this.tranLog).pipe(
-             finalize(() => {
-                 this.spinner.hide();
-             })
-            ).subscribe((response:any)=>{
-            if(response.isSuccess){
+            finalize(() => {
+                this.spinner.hide();
+            })
+        ).subscribe((response: any) => {
+            if (response.isSuccess) {
                 this.dataSource.data = response.data;
-            }
-            else{
+            } else {
                 this.toastrService.error(response?.message, 'Error');
             }
 
-        },error => {
+        }, error => {
             this.toastrService.error(error.error.message);
         })
     }
@@ -145,4 +144,9 @@ export class ProjectComponent implements OnInit, AfterViewInit {
             return "Not Approved"
         }
     }
+
+    onCancel() {
+        this.tranForm.reset();
+    }
+
 }
