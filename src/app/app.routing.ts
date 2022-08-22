@@ -12,7 +12,7 @@ export const appRoutes: Route[] = [
     // Redirect empty path to '/dashboards/project'
     {path: '', pathMatch : 'full', redirectTo: 'dashboard/transactions'},
 
-    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'dashboards/transactions'},
+    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'dashboard/transactions'},
 
     // Auth routes for guests
     {

@@ -78,13 +78,13 @@ export class AuthSignInComponent implements OnInit {
         ).subscribe(
                 (response: any) => {
                     if (response.isSuccess) {
-                        // const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-                        // this._router.navigateByUrl(redirectURL).then(() => {
-                        // });
-                        // this.toastrService.success("login Successfully!", 'Success');
+
                         sessionStorage.setItem('access_token',response.token)
                         debugger;
-                        this._router.navigate([''])
+                        const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+                        this._router.navigateByUrl(redirectURL).then(() => {
+                        });
+                        this.toastrService.success("login Successfully!", 'Success');
                     } else {
                        this.toastrService.error(response.message, 'Error')
                         this.alert = {

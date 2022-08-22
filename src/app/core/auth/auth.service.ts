@@ -138,15 +138,12 @@ export class AuthService
 
     getAllTransactions(data: any){
         let req = {
-            "startDate":"7/16/2022 2:26:22 PM",
-            "endDate":"9/16/2022 2:26:22 PM",
+            "startDate":data.startDate,
+            "endDate":data.endDate,
             "orderBy": 0
         }
         return this._httpClient.post(environment.apiUrl + 'api/Transactions/v1/GetAllTransaction', req);
     }
-
-
-
 
     /**
      * Unlock session

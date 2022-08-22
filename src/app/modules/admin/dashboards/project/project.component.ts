@@ -41,7 +41,6 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     tranForm: FormGroup;
     data: any;
     tranLog: TRANMODEL;
-    startend: Date;
     minEnd = new Date();
     start_date = null
     end_date = null
@@ -83,8 +82,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     createForm() {
         this.tranForm = this._formBuilder.group({
-                startDate: ['', [Validators.required]],
-                endDate: ['', [Validators.required]],
+                startDate: ['',[Validators.required]],
+                endDate: ['',[Validators.required]],
                 orderBy: [0],
             }
         );
@@ -92,12 +91,14 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
 
     minEndDate() {
+        debugger
         this.minEnd = this.tranForm.controls['startDate'].value;
         this.start_date = this.datepipe.transform(this.tranForm.controls['startDate'].value, 'MM-dd-yyyy')
     }
 
     OnchangeEndDate() {
-        this.startend = this.tranForm.controls['endDate'].value;
+        debugger
+        this.minEnd = this.tranForm.controls['endDate'].value;
         this.end_date = this.datepipe.transform(this.tranForm.controls['endDate'].value, 'MM-dd-yyyy')
 
     }
@@ -105,9 +106,9 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     getTransactions() {
         debugger
         this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
-        if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : null) {
-            this.tranLog.endDate = this.tranLog.startDate;
-        }
+        // if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : "") {
+        //     this.tranLog.endDate = this.tranLog.startDate;
+        // }
         this.spinner.show();
         this.authService.getAllTransactions(this.tranLog).pipe(
             finalize(() => {

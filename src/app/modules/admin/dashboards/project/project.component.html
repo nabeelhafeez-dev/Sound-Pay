@@ -43,7 +43,7 @@
                                     <mat-label>Start Date</mat-label>
                                     <input
                                         matInput
-                                        [max]="startend"
+
                                         [matDatepicker]="picker1"
                                         placeholder="Start Date"
                                         readonly
@@ -125,7 +125,7 @@
                             <ng-container matColumnDef="TranDate">
                                 <th *matHeaderCellDef>Date</th>
                                 <td
-                                    *matCellDef="let user">{{user.transactionDate?user.transactionDate:"-" | date: 'M/d/yy, h:mm a'}}</td>
+                                    *matCellDef="let user">{{user.transactionDateTime?user.transactionDateTime:"-" | date: 'M/d/yy, h:mm a'}}</td>
                             </ng-container>
 
                             <ng-container matColumnDef="Sender">

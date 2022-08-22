@@ -105,7 +105,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         if (this.getSessionToken()) {
             this.checkIfAccess()
             if (route == '/') {
-                this._router.navigate(['/dashboard']);
+                this._router.navigate(['/dashboard/transactions']);
             }
             return of(true);
         } else {
@@ -125,7 +125,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
                         if(user) {
                             let ismatch = false
                             let userData = JSON.parse(user);
-                            userData.activities[0]?.forEach(item => {
+                            userData.forEach(item => {
                                 let childURl = item?.activity_url?.includes(_event?.url);
                                 if (childURl) {
                                     ismatch = true;
@@ -133,9 +133,9 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
                             })
                             _event.url = _event.url.replace('%23', '#');
                             if (!ismatch) {
-                                if (!_event?.url.includes('dashboard')) {
+                                if (!_event?.url.includes('dashboard/transactions')) {
                                     var route= '/'
-                                    this._router.navigate(['/dashboard'], {queryParams: {route}});
+                                    this._router.navigate(['/dashboard/transactions'], {queryParams: {route}});
                                 }
                             }
                         }
