@@ -83,8 +83,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     createForm() {
         this.tranForm = this._formBuilder.group({
-                startDate: ['',[Validators.required]],
-                endDate: ['',[Validators.required]],
+                startDate: [""],
+                endDate: [""],
                 orderBy: [0],
             }
         );
@@ -101,17 +101,16 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         debugger
         this.startend = this.tranForm.controls['endDate'].value;
         this.end_date = this.datepipe.transform(this.tranForm.controls['endDate'].value, 'MM-dd-yyyy')
-
     }
 
     getTransactions() {
         debugger
-        this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
-        // if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : "") {
-        //     this.tranLog.endDate = this.tranLog.startDate;
-        // }
+       // this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
+       //  if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : "") {
+       //      this.tranLog.endDate = this.tranLog.startDate;
+       //  }
         this.spinner.show();
-        this.authService.getAllTransactions(this.tranLog).pipe(
+        this.authService.getAllTransactions(this.tranForm.value).pipe(
             finalize(() => {
                 this.spinner.hide();
             })

@@ -40,7 +40,7 @@
                         <div class="flex">
                             <div class="w-3/6 pr-2">
                                 <mat-form-field class="w-full">
-                                    <mat-label>Start Date</mat-label>
+                                    <mat-label style="color: #FB6D3B">Start Date</mat-label>
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                     <input
@@ -51,16 +51,13 @@
                                         readonly
                                         (dateChange)="minEndDate()"
                                         formControlName="startDate">
-                                    <mat-error *ngIf="tranForm.get('startDate').hasError('required')">
-                                        Start Date is required
-                                    </mat-error>
                                 </mat-form-field>
                             </div>
                             <div class="w-3/6 px-2">
                                 <mat-form-field class="w-full">
-                                    <mat-label>End Date</mat-label><mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-label  style="color: #FB6D3B">End Date</mat-label>
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                     <mat-datepicker #picker2></mat-datepicker>
-
                                     <input
                                         matInput
                                         [matDatepicker]="picker2"
@@ -69,9 +66,6 @@
                                         readonly
                                         (dateChange)="OnchangeEndDate()"
                                         formControlName="endDate">
-                                    <mat-error *ngIf="tranForm.get('endDate').hasError('required')">
-                                        End Date is required
-                                    </mat-error>
                                 </mat-form-field>
                             </div>
 
@@ -95,14 +89,15 @@
                             <span class="mat-button-focus-overlay"></span>
                         </button>
                         <button
+                            style="background-color: #FB6D3B"
                             type="button"
                             mat-flat-button
-                            class="mat-focus-indicator text-white bg-orange-600 sm:inline-flex ml-3 mat-flat-button mat-button-base"
+                            class="mat-focus-indicator text-white sm:inline-flex ml-3 mat-flat-button mat-button-base"
                             (click)="getTransactions()">
                             <mat-icon class="mr-2 text-white icon-size-5">
                                 refresh
                             </mat-icon>
-                            Load Report
+                            Load Record
                             <span class="mat-button-wrapper"></span>
                             <span matripple="" class="mat-ripple mat-button-ripple" ng-reflect-disabled="false" ng-reflect-centered="false" ng-reflect-trigger="[object HTMLButtonElement]"></span>
                             <span class="mat-button-focus-overlay"></span>
