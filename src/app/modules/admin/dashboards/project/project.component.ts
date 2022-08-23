@@ -110,22 +110,17 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     getTransactions() {
         debugger
-        // let date :any = moment.duration(this.tranForm.controls['startDate'].value).add(1,'day');
-        // let date2 :any = moment.duration(this.tranForm.controls['endDate'].value).add(1,'day');
-        // date = new Date(date);
-        // date2 = new Date(date2);
-        // console.log(this.tranForm.value);
-        // let req = {
-        //     "startDate":date,
-        //     "endDate":date2,
-        //     "orderBy": 0
-        // }
-       this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
-       //  if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : "") {
-       //      this.tranLog.endDate = this.tranLog.startDate;
-       //  }
+        let startDate :any = this.tranForm.controls['startDate'].value?moment.duration(this.tranForm.controls['startDate'].value).add(1,'day'):'';
+        let endDate :any =this.tranForm.controls['endDate'].value?moment.duration(this.tranForm.controls['endDate'].value).add(1,'day'):'';
+        startDate = new Date(startDate);
+        endDate = new Date(endDate);
+        let obj = {
+            "startDate":startDate,
+            "endDate":endDate,
+            "orderBy": 0
+        }
         this.spinner.show();
-        this.authService.getAllTransactions(this.tranLog).pipe(
+        this.authService.getAllTransactions(obj).pipe(
             finalize(() => {
                 this.spinner.hide();
             })
