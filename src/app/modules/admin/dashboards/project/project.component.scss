@@ -18,6 +18,25 @@
     color: #3AACFF;
 }
 
+body.light .mat-calendar-body-selected, body .light .mat-calendar-body-selected {
+    background-color:  #FB6D3B !important;
+}
+body.light .mat-calendar-body-in-range::before, body .light .mat-calendar-body-in-range::before {
+    background:  #ffa281 !important;
+}
+
+.mat-calendar-body-cell:not(.mat-calendar-body-disabled):hover > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical), .cdk-keyboard-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical), .cdk-program-focused .mat-calendar-body-active > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+    --tw-bg-opacity: 1 !important;
+    background-color: #ffa281 !important;
+    --tw-bg-opacity: 0.3 !important;
+}
+
+
+.mat-datepicker-toggle{
+    svg{
+        color:  #FB6D3B !important;
+    }
+}
 
 .transaction-table {
     th {
@@ -32,5 +51,12 @@
 
         padding: 0px 3px;
     }
+
+
+    body.light {
+                .mat-calendar-body-selected {
+                    background-color: #FB6D3B;
+                }
+            }
 }
 

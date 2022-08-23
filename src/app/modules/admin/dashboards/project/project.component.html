@@ -14,6 +14,7 @@
                             <button
                                 class="hidden sm:inline-flex ml-2"
                                 mat-flat-button
+                                (click)="downloadPdf()"
                                 [color]="'primary'">
                                 <mat-icon
                                     class="icon-size-5"
@@ -38,35 +39,30 @@
                 <div class="  w-full flex ">
                     <div class="w-3/6">
                         <div class="flex">
-                            <div class="w-3/6 pr-2">
-                                <mat-form-field class="w-full">
-                                    <mat-label style="color: #FB6D3B">Start Date</mat-label>
-                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker1></mat-datepicker>
-                                    <input
-                                        matInput
-                                        [max]="startend"
-                                        [matDatepicker]="picker1"
-                                        placeholder="Start Date"
-                                        readonly
-                                        (dateChange)="minEndDate()"
-                                        formControlName="startDate">
-                                </mat-form-field>
-                            </div>
-                            <div class="w-3/6 px-2">
-                                <mat-form-field class="w-full">
-                                    <mat-label  style="color: #FB6D3B">End Date</mat-label>
-                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker2></mat-datepicker>
-                                    <input
-                                        matInput
-                                        [matDatepicker]="picker2"
-                                        placeholder="End Date"
-                                        [min]="minEnd"
-                                        readonly
-                                        (dateChange)="OnchangeEndDate()"
-                                        formControlName="endDate">
-                                </mat-form-field>
+                            <div class="w-100 pr-2">
+                                <mat-form-field  color="#FB6D3B" appearance="fill" class="w-full">
+                                    <mat-label style="color: #FB6D3B">Enter a date range</mat-label>
+                                    <mat-date-range-input [rangePicker]="picker">
+                                        <input matStartDate
+                                               [max]="startend"
+                                               readonly
+                                               (dateChange)="minEndDate()"
+                                               formControlName="startDate"
+                                               placeholder="Start date">
+                                        <input matEndDate
+                                               [min]="minEnd"
+                                               readonly
+                                               (dateChange)="OnchangeEndDate()"
+                                               formControlName="endDate"
+                                               placeholder="End date">
+                                    </mat-date-range-input>
+                                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-date-range-picker #picker></mat-date-range-picker>
+<!--                                    <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
+<!--                                    <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
+                              </mat-form-field>
+
                             </div>
 
                         </div>

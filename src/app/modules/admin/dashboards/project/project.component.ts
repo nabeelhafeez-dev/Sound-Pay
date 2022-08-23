@@ -23,6 +23,9 @@ import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
 import {finalize} from "rxjs/operators";
 import {TRANMODEL} from "../../../tranModel";
+import moment from "moment";
+import {environment} from "../../../../../environments/environment";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'project',
@@ -41,7 +44,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     tranForm: FormGroup;
     data: any;
     tranLog: TRANMODEL;
-    startend: Date;
+    startend: any;
     minEnd = new Date();
     start_date = null
     end_date = null
@@ -65,7 +68,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         public datepipe: DatePipe,
         private authService: AuthService,
         private toastrService: ToastrService,
-        private spinner: NgxSpinnerService
+        private spinner: NgxSpinnerService,
+        private _httpClient: HttpClient,
     ) {
     }
 
@@ -94,7 +98,8 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     minEndDate() {
         debugger
         this.minEnd = this.tranForm.controls['startDate'].value;
-        this.start_date = this.datepipe.transform(this.tranForm.controls['startDate'].value, 'MM-dd-yyyy')
+        this.start_date = this.datepipe.transform(this.tranForm.controls['startDate'].value, 'MM-dd-yyyy');
+
     }
 
     OnchangeEndDate() {
@@ -105,12 +110,22 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     getTransactions() {
         debugger
-       // this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
+        // let date :any = moment.duration(this.tranForm.controls['startDate'].value).add(1,'day');
+        // let date2 :any = moment.duration(this.tranForm.controls['endDate'].value).add(1,'day');
+        // date = new Date(date);
+        // date2 = new Date(date2);
+        // console.log(this.tranForm.value);
+        // let req = {
+        //     "startDate":date,
+        //     "endDate":date2,
+        //     "orderBy": 0
+        // }
+       this.tranLog = Object.assign({}, this.tranLog, this.tranForm.value);
        //  if (this.tranLog.startDate = this.start_date ? this.start_date?.toString() : "") {
        //      this.tranLog.endDate = this.tranLog.startDate;
        //  }
         this.spinner.show();
-        this.authService.getAllTransactions(this.tranForm.value).pipe(
+        this.authService.getAllTransactions(this.tranLog).pipe(
             finalize(() => {
                 this.spinner.hide();
             })
@@ -150,4 +165,19 @@ export class ProjectComponent implements OnInit, AfterViewInit {
         this.tranForm.reset();
     }
 
+    downloadPdf() {
+        //window.open(  environment.apiUrl+"api/Transactions/v1/TransactionReportPdf", "_blank")
+        this._httpClient.get(environment.apiUrl+"api/Transactions/v1/TransactionReportPdf",{ responseType: 'blob'}).subscribe(res =>{
+            let blob = new Blob([res], { type: 'application/pdf' });
+            let pdfUrl = window.URL.createObjectURL(blob);
+
+            var PDF_link = document.createElement('a');
+            PDF_link.href = pdfUrl;
+            //   TO OPEN PDF ON BROWSER IN NEW TAB
+            window.open(pdfUrl, '_blank');
+            //   TO DOWNLOAD PDF TO YOUR COMPUTER
+            PDF_link.download = "Transactions Report.pdf";
+            PDF_link.click();
+        });
+    }
 }
