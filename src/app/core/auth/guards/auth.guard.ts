@@ -94,7 +94,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     private getSessionToken(): Boolean {
-        let token = JSON.parse(sessionStorage.getItem('userData'))?.token
+        let token = JSON.parse(sessionStorage.getItem('data'))?.token
         if (token) {
             return true;
         }
@@ -121,7 +121,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
             if (_event instanceof NavigationStart) {
                 if(_event?.url) {
                     if(!_event?.url.includes("sign-out")) {
-                        const user = sessionStorage.getItem("userData");//fetchUser from session
+                        const user = sessionStorage.getItem("data");//fetchUser from session
                         if(user) {
                             let ismatch = false
                             let userData = JSON.parse(user);
