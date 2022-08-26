@@ -39,7 +39,8 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
      * @param state
      */
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        return this.activateRoutes(state.url === '/sign-out' ? '/' : state.url);
+        return this.activateRoutes(state.url);
+        // return  true;
     }
 
     /**
@@ -75,10 +76,12 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
      */
     private _check(redirectURL: string): Observable<boolean> {
         // Check the authentication status
+        debugger;
         return this._authService.check()
             .pipe(
                 switchMap((authenticated) => {
                     // If the user.ts is not authenticated...
+                    debugger;
                     if (!authenticated) {
                         // Redirect to the sign-in page
                         this._router.navigate(['sign-in'], {queryParams: {redirectURL}});
@@ -94,18 +97,19 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     }
 
     private getSessionToken(): Boolean {
-        let token = JSON.parse(sessionStorage.getItem('data'))?.token
-        if (token) {
+        debugger;
+        let access_token = sessionStorage.getItem('access_token')?? '';
+        if (access_token) {
             return true;
         }
         return false;
     }
 
     private activateRoutes(route: string) {
+        debugger;
         if (this.getSessionToken()) {
-            this.checkIfAccess()
             if (route == '/') {
-                this._router.navigate(['/dashboard/transactions']);
+                this._router.navigate(['dashboard/transactions']);
             }
             return of(true);
         } else {
@@ -121,11 +125,11 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
             if (_event instanceof NavigationStart) {
                 if(_event?.url) {
                     if(!_event?.url.includes("sign-out")) {
-                        const user = sessionStorage.getItem("data");//fetchUser from session
+                        const user = sessionStorage.getItem("userData");//fetchUser from session
                         if(user) {
                             let ismatch = false
                             let userData = JSON.parse(user);
-                            userData.forEach(item => {
+                            userData.activities[0]?.forEach(item => {
                                 let childURl = item?.activity_url?.includes(_event?.url);
                                 if (childURl) {
                                     ismatch = true;
@@ -135,7 +139,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
                             if (!ismatch) {
                                 if (!_event?.url.includes('dashboard/transactions')) {
                                     var route= '/'
-                                    this._router.navigate(['/dashboard/transactions'], {queryParams: {route}});
+                                    this._router.navigate(['dashboard/transactions'], {queryParams: {route}});
                                 }
                             }
                         }

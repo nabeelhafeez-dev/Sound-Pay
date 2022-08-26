@@ -33,7 +33,7 @@ export class AuthService
      */
     set accessToken(token: string)
     {
-        sessionStorage.setItem('access_token', token);
+        // sessionStorage.setItem('access_token', token);
     }
 
     get accessToken(): string

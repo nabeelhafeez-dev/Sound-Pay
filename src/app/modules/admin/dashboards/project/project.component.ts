@@ -80,6 +80,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     ngOnInit(): void {
         // Get the data
+        debugger;
         this.createForm();
         this.getTransactions();
         // console.log("abc");
@@ -163,6 +164,7 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     downloadPdf() {
         //window.open(  environment.apiUrl+"api/Transactions/v1/TransactionReportPdf", "_blank")
         this._httpClient.get(environment.apiUrl+"api/Transactions/v1/TransactionReportPdf",{ responseType: 'blob'}).subscribe(res =>{
+            this.toastrService.success("PDF Downloaded Successfully", 'Success');
             let blob = new Blob([res], { type: 'application/pdf' });
             let pdfUrl = window.URL.createObjectURL(blob);
 
