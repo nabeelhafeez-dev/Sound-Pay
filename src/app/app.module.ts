@@ -19,7 +19,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 
 const routerConfig: ExtraOptions = {
-    preloadingStrategy       : PreloadAllModules,
+    useHash:true,
+    preloadingStrategy: PreloadAllModules,
     scrollPositionRestoration: 'enabled'
 };
 

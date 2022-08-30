@@ -6,7 +6,7 @@
                 <div class="text-2xl font-semibold tracking-tight leading-8">Transactions History Records</div>
 
                 <div class="flex items-center ml-6">
-                    <button mat-button mat-stroked-button class="mat-focus-indicator w-50 btn-outline-success mat-button mat-stroked-button mat-button-base" data-bs-toggle="collapse"
+                    <button mat-button mat-stroked-button class="mat-focus-indicator w-28 btn-outline-success mat-button mat-stroked-button mat-button-base" data-bs-toggle="collapse"
                             data-bs-target="#filter" aria-expanded="false" aria-controls="filter">
                         Filter
                         <mat-icon class="mr-2 text-green ml-4 ">keyboard_arrow_down</mat-icon>
@@ -40,29 +40,28 @@
                     <div class="w-3/6">
                         <div class="flex">
                             <div class="w-100 pr-2">
+
                                 <mat-form-field  color="#FB6D3B" appearance="fill" class="w-full">
                                     <mat-label style="color: #FB6D3B">Enter a date range</mat-label>
-                                    <mat-date-range-input [rangePicker]="picker">
+                                    <mat-date-range-input [rangePicker]="picker" [min]="startend" [max]="max" [formGroup]="tranForm">
                                         <input matStartDate
-                                               [max]="startend"
                                                readonly
                                                (dateChange)="minEndDate()"
                                                formControlName="startDate"
                                                placeholder="Start date">
                                         <input matEndDate
-                                               [min]="minEnd"
                                                readonly
+                                               [max]="minEnd"
                                                (dateChange)="OnchangeEndDate()"
                                                formControlName="endDate"
                                                placeholder="End date">
                                     </mat-date-range-input>
-                                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                                    <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                     <mat-date-range-picker #picker></mat-date-range-picker>
-<!--                                    <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
-<!--                                    <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
-                              </mat-form-field>
-
+                                    <!--                                    <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>-->
+                                    <!--                                    <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>-->
+                                </mat-form-field>
                             </div>
 
                         </div>
@@ -140,7 +139,7 @@
                             <ng-container matColumnDef="Amount">
                                 <th *matHeaderCellDef>Amount</th>
                                 <td
-                                    *matCellDef="let user">{{user.amount?user.amount:"-"}}</td>
+                                    *matCellDef="let user">{{user.amount | currency}}</td>
                             </ng-container>
 
                             <ng-container matColumnDef="Email">

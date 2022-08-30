@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 import {Subject} from 'rxjs';
 import {ApexOptions} from 'ng-apexcharts';
 import {ProjectService} from 'app/modules/admin/dashboards/project/project.service';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
@@ -26,6 +26,7 @@ import {TRANMODEL} from "../../../tranModel";
 import moment from "moment";
 import {environment} from "../../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
+import * as FileSaver from "file-saver"
 
 @Component({
     selector: 'project',
@@ -41,23 +42,27 @@ import {HttpClient} from "@angular/common/http";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectComponent implements OnInit, AfterViewInit {
+
+
     tranForm: FormGroup;
     data: any;
     tranLog: TRANMODEL;
     startend: any;
     minEnd = new Date();
+    max = new Date();
     start_date = null
     end_date = null
     dataSource = new MatTableDataSource();
     displayedColumns = [
         'TranID',
         'TranDate',
-        'Amount',
-        'Email',
         'Sender',
         'Recipient',
+        'Amount',
+        'Email',
         'TranStatus'
     ]
+
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -98,23 +103,22 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     minEndDate() {
         debugger
-        this.minEnd = this.tranForm.controls['startDate'].value;
-        this.start_date = this.datepipe.transform(this.tranForm.controls['startDate'].value, 'MM-dd-yyyy');
+        this.start_date = this.datepipe.transform(this.tranForm.controls['startDate'].value, 'dd-MM-yyyy');
 
     }
 
     OnchangeEndDate() {
         debugger
-        this.startend = this.tranForm.controls['endDate'].value;
-        this.end_date = this.datepipe.transform(this.tranForm.controls['endDate'].value, 'MM-dd-yyyy')
+        //this.startend = this.tranForm.controls['startDate'].value;
+        this.minEnd = this.tranForm.controls['endDate'].value;
+        this.end_date = this.datepipe.transform(this.tranForm.controls['endDate'].value, 'dd-MM-yyyy')
     }
-
     getTransactions() {
         debugger
-        let startDate :any = this.tranForm.controls['startDate'].value?moment.duration(this.tranForm.controls['startDate'].value).add(1,'day'):'';
-        let endDate :any =this.tranForm.controls['endDate'].value?moment.duration(this.tranForm.controls['endDate'].value).add(1,'day'):'';
-        startDate = new Date(startDate);
-        endDate = new Date(endDate);
+        let startDate :any =  this.datepipe.transform(this.tranForm.controls['startDate'].value, 'dd/MM/yyyy');
+        let endDate :any = this.datepipe.transform(this.tranForm.controls['startDate'].value, 'dd/MM/yyyy');
+        // startDate = new Date(startDate);
+        // endDate = new Date(endDate);
         let obj = {
             "startDate":startDate,
             "endDate":endDate,
@@ -149,11 +153,11 @@ export class ProjectComponent implements OnInit, AfterViewInit {
 
     returnStatus(val) {
         if (val == 0) {
-            return "pending"
+            return "Pending"
         } else if (val == 1) {
-            return "Approved"
+            return "Approve"
         } else if (val == 2) {
-            return "Not Approved"
+            return "Not Approve"
         }
     }
 
@@ -162,19 +166,25 @@ export class ProjectComponent implements OnInit, AfterViewInit {
     }
 
     downloadPdf() {
-        //window.open(  environment.apiUrl+"api/Transactions/v1/TransactionReportPdf", "_blank")
-        this._httpClient.get(environment.apiUrl+"api/Transactions/v1/TransactionReportPdf",{ responseType: 'blob'}).subscribe(res =>{
+        let startDate :any =  this.datepipe.transform(this.tranForm.controls['startDate'].value, 'dd/MM/yyyy');
+        let endDate :any = this.datepipe.transform(this.tranForm.controls['endDate'].value, 'dd/MM/yyyy');
+        this._httpClient.get(environment.apiUrl+"api/Transactions/v1/TransactionReportPdf/withparams?", {
+            responseType: 'blob',
+            params: {
+                startdate: startDate,
+                enddate: endDate,
+            }
+        },).subscribe(res =>{
             this.toastrService.success("PDF Downloaded Successfully", 'Success');
             let blob = new Blob([res], { type: 'application/pdf' });
             let pdfUrl = window.URL.createObjectURL(blob);
 
             var PDF_link = document.createElement('a');
             PDF_link.href = pdfUrl;
-            //   TO OPEN PDF ON BROWSER IN NEW TAB
-            window.open(pdfUrl, '_blank');
-            //   TO DOWNLOAD PDF TO YOUR COMPUTER
             PDF_link.download = "Transactions Report.pdf";
             PDF_link.click();
         });
+
     }
+
 }

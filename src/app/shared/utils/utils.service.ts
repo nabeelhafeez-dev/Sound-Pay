@@ -41,10 +41,10 @@ export class UtilsService {
 
 export const DateFormats = {
     parse: {
-        dateInput: ['YYYY-MM-DD']
+        dateInput: ['YYYY/MM/DD']
     },
     display: {
-        dateInput: 'DD-MM-yyyy',
+        dateInput: 'DD/MM/yyyy',
         monthYearLabel: 'MMM YYYY',
         dateA11yLabel: 'LL',
         monthYearA11yLabel: 'MMMM YYYY',
